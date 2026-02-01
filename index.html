@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Will you be my Valentine? 💘</title>
+  <style>
+    :root{
+      --bg1:#ffdee9;
+      --bg2:#b5fffc;
+      --card:#ffffffcc;
+      --text:#1f2937;
+      --accent:#ff3b7a;
+      --accent2:#7c3aed;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(circle at 20% 10%, var(--bg1), transparent 40%),
+                  radial-gradient(circle at 80% 30%, var(--bg2), transparent 45%),
+                  linear-gradient(135deg, #fff, #ffeef5);
+      overflow:hidden;
+    }
+
+    /* Floating hearts */
+    .heart{
+      position:absolute;
+      width:14px; height:14px;
+      transform: rotate(45deg);
+      opacity:.35;
+      animation: floatUp linear infinite;
+      filter: blur(.1px);
+    }
+    .heart:before, .heart:after{
+      content:"";
+      position:absolute;
+      width:14px; height:14px;
+      background: currentColor;
+      border-radius:50%;
+    }
+    .heart{ background: currentColor; }
+    .heart:before{ left:-7px; top:0; }
+    .heart:after{ left:0; top:-7px; }
+
+    @keyframes floatUp{
+      from{ transform: translateY(120svh) rotate(45deg); }
+      to{ transform: translateY(-30svh) rotate(45deg); }
+    }
+
+    .wrap{
+      width:min(680px, 92vw);
+      padding:24px;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      background:var(--card);
+      backdrop-filter: blur(10px);
+      border:1px solid #ffffffaa;
+      border-radius:24px;
+      padding:28px;
+      box-shadow: 0 18px 50px rgba(17,24,39,.12);
+      text-align:center;
+      position:relative;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing:-0.02em;
+    }
+    p{
+      margin:8px 0 0;
+      font-size: clamp(16px, 2.2vw, 18px);
+      line-height:1.5;
+    }
+
+    .name{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      background: #fff;
+      border: 1px dashed #ff91b2;
+      color:#b42354;
+      font-weight:600;
+    }
+
+    .buttons{
+      margin-top:22px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      position:relative;
+      min-height:64px;
+    }
+
+    button{
+      border:0;
+      padding:14px 18px;
+      border-radius:14px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      user-select:none;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    #yes{
+      background: linear-gradient(135deg, var(--accent), #ff7aa7);
+      color:white;
+      box-shadow: 0 14px 30px rgba(255,59,122,.25);
+    }
+    #yes:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+
+    #no{
+      background: linear-gradient(135deg, #111827, #374151);
+      color:white;
+      box-shadow: 0 14px 30px rgba(17,24,39,.18);
+      position:relative;
+    }
+    #no:hover{ transform: translateY(-1px); }
+
+    .footer{
+      margin-top:18px;
+      font-size:13px;
+      opacity:.75;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      background: rgba(0,0,0,.35);
+      z-index:10;
+      padding:18px;
+    }
+    .modal.show{ display:grid; }
+    .modal-card{
+      width:min(560px, 92vw);
+      background:white;
+      border-radius:22px;
+      padding:22px 22px 18px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .big{
+      font-size: clamp(34px, 5vw, 52px);
+      margin:6px 0 0;
+    }
+    .confetti{
+      position:absolute;
+      inset:-10px;
+      pointer-events:none;
+      opacity:.95;
+    }
+    .close{
+      margin-top:14px;
+      background: linear-gradient(135deg, var(--accent2), #22c55e);
+      color:white;
+      box-shadow: 0 12px 28px rgba(124,58,237,.18);
+    }
+
+    .tiny{
+      margin-top:10px;
+      font-size:12px;
+      opacity:.7;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- hearts get injected by JS -->
+  <div class="wrap">
+    <div class="card" aria-label="Valentine card">
+      <h1>Hey my love 💌</h1>
+
+      <p>
+       
+        <strong>Will you be my Valentine?</strong> 💘
+      </p>
+
+      <div class="buttons" id="btnArea">
+        <button id="yes" type="button">Yes! 💖</button>
+        <button id="no" type="button">No </button>
+      </div>
+
+      <div class="footer">
+        Made with love by <span id="yourName">someone who adores you - Maroun Aouad</span> ✨
+<p style="margin-top:6px; font-size:14px; opacity:0.8;">
+  P.S. “No” is currently out of order because this page only accepts correct answer 
+</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Yay modal">
+    <div class="modal-card">
+      <canvas class="confetti" id="confetti"></canvas>
+      <div class="big">YEY!! 🥰</div>
+<img 
+  src="us.jpg" 
+  alt="Us 💖"
+  style="
+    margin:14px auto 10px;
+    display:block;
+    max-width:80%;
+    border-radius:18px;
+    box-shadow:0 14px 35px rgba(0,0,0,0.25);
+  "
+/>
+      <p style="margin-top:10px">
+        I can’t wait to celebrate with you! 🌹
+      </p>
+
+      <button class="close" id="close" type="button">Send me a kiss 😘</button>
+      
+    </div>
+  </div>
+
+  <script>
+    // --- Personalize via URL params: ?her=Sara&me=Omar
+    const params = new URLSearchParams(location.search);
+    const her = params.get("her");
+    const me  = params.get("me");
+    if (her) document.getElementById("herName").textContent = her;
+    if (me)  document.getElementById("yourName").textContent = me;
+
+    // --- Floating hearts background
+    const colors = ["#ff3b7a", "#ff7aa7", "#7c3aed", "#22c55e", "#111827"];
+    const heartCount = 26;
+    for (let i = 0; i < heartCount; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = (6 + Math.random() * 10) + "s";
+      h.style.animationDelay = (-Math.random() * 10) + "s";
+      h.style.color = colors[Math.floor(Math.random() * colors.length)];
+      h.style.transform = `translateY(${110 + Math.random()*40}svh) rotate(45deg) scale(${0.7 + Math.random()*1.3})`;
+      document.body.appendChild(h);
+    }
+
+    // --- No button runs away (on hover/touch)
+    const noBtn = document.getElementById("no");
+    const area = document.getElementById("btnArea");
+
+    function moveNoButton() {
+      const areaRect = area.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const padding = 6;
+      const maxX = areaRect.width - btnRect.width - padding;
+      const maxY = areaRect.height - btnRect.height - padding;
+
+      const x = Math.max(padding, Math.random() * maxX);
+      const y = Math.max(padding, Math.random() * maxY);
+
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); }, {passive:false});
+
+    // --- Yes opens modal + confetti
+    const yesBtn = document.getElementById("yes");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("close");
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      const card = modal.querySelector(".modal-card");
+      canvas.width = card.clientWidth * devicePixelRatio;
+      canvas.height = card.clientHeight * devicePixelRatio;
+      canvas.style.width = card.clientWidth + "px";
+      canvas.style.height = card.clientHeight + "px";
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+
+    let pieces = [];
+    function launchConfetti() {
+      resizeCanvas();
+      pieces = Array.from({length: 160}, () => ({
+        x: Math.random() * canvas.clientWidth,
+        y: -10 - Math.random() * 100,
+        w: 6 + Math.random() * 6,
+        h: 8 + Math.random() * 10,
+        vy: 2 + Math.random() * 4,
+        vx: -2 + Math.random() * 4,
+        rot: Math.random() * Math.PI,
+        vr: -0.15 + Math.random() * 0.3,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      }));
+      tick();
+    }
+
+    let animId;
+    function tick() {
+      ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
+      for (const p of pieces) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      }
+      pieces = pieces.filter(p => p.y < canvas.clientHeight + 30);
+      if (pieces.length) animId = requestAnimationFrame(tick);
+    }
+
+    yesBtn.addEventListener("click", () => {
+      modal.classList.add("show");
+      launchConfetti();
+      try { navigator.vibrate?.(60); } catch {}
+    });
+
+    function closeModal() {
+      modal.classList.remove("show");
+      if (animId) cancelAnimationFrame(animId);
+    }
+
+    closeBtn.addEventListener("click", () => {
+      // Cute: copy a message she can paste back
+      const message = `Yesss! 💖 Happy Valentine’s, ${me || "my love"} 😘`;
+      navigator.clipboard?.writeText(message).catch(()=>{});
+      closeModal();
+      alert("Mwah 😘 (I copied a cute message to your clipboard!)");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    window.addEventListener("resize", () => {
+      if (modal.classList.contains("show")) resizeCanvas();
+    });
+  </script>
+</body>
+</html>
